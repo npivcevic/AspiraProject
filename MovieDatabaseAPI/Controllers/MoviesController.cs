@@ -34,7 +34,10 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<MovieDto>> GetMovie(int id)
         {
-            var movie = await _context.Movies.FindAsync(id);
+            var movie = await _context.Movies
+                .Include(m => m.Reviews.OrderByDescending(r => r.CreatedAt).Take(3))
+                .ThenInclude(r => r.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (movie == null)
             {

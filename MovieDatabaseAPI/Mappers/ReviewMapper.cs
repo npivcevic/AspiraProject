@@ -26,8 +26,20 @@ public static class ReviewMapper
             Id = review.Id,
             Rating = review.Rating,
             CreatedAt = review.CreatedAt,
-            User = review.User.ToUserListDto(),
-            Movie = review.Movie.ToMovieListDto()
+            User = review.User?.ToUserListDto(),
+            Movie = review.Movie?.ToMovieListDto()
+        };
+    }
+
+    public static ReviewForMovieDto ToReviewForMovieDto(this Review review)
+    {
+        return new ReviewForMovieDto
+        {
+            Id = review.Id,
+            Rating = review.Rating,
+            Content = review.Content,
+            CreatedAt = review.CreatedAt,
+            User = review.User?.ToUserListDto(),
         };
     }
 

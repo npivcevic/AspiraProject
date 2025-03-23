@@ -10,4 +10,6 @@ public class Movie
     public int? ReleaseYear { get; set; }
     [MaxLength(1000)]
     public string Description { get; set; } = "";
+
+    public ICollection<Review> Reviews { get; set; } = new List<Review>();
 }
