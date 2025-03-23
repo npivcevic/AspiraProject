@@ -21,8 +21,19 @@ public class ReviewListDto
     public int Rating { get; set; }
     public DateTime CreatedAt { get; set; }
 
-    public required UserListDto User { get; set; }
-    public required MovieListDto Movie { get; set; }
+    public UserListDto? User { get; set; }
+    public MovieListDto? Movie { get; set; }
+}
+
+public class ReviewForMovieDto
+{
+    public int Id { get; set; }
+    public int Rating { get; set; }
+
+    public string Content { get; set; } = "";
+    public DateTime CreatedAt { get; set; }
+
+    public UserListDto? User { get; set; }
 }
 
 public class ReviewCreateDto

@@ -12,7 +12,8 @@ public static class MovieMapper
             Id = movie.Id,
             Title = movie.Title,
             ReleaseYear = movie.ReleaseYear,
-            Description = movie.Description
+            Description = movie.Description,
+            Reviews = movie.Reviews.Select(r => r.ToReviewForMovieDto()).ToList()
         };
     }
     
