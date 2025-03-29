@@ -53,6 +53,4 @@ public class ReviewUpdateDto
     public string Content { get; set; } = "";
     [Range(1, 10)]
     public int Rating { get; set; }
-    public int UserId { get; set; }
-    public int MovieId { get; set; }
 }
