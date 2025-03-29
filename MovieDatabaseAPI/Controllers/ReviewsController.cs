@@ -68,10 +68,9 @@ namespace MovieDatabaseAPI.Controllers
                 return NotFound();
             }
 
-            var review = reviewUpdateDto.ToReview();
-            review.CreatedAt = existingReview.CreatedAt;
+            var review = reviewUpdateDto.ToReview(existingReview);
 
-            _context.Entry(review).State = EntityState.Modified;
+            _context.Entry(existingReview).CurrentValues.SetValues(review);
 
             await _context.SaveChangesAsync();
 
@@ -83,6 +82,13 @@ namespace MovieDatabaseAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<ReviewDto>> PostReview(ReviewCreateDto reviewCreateDto)
         {
+            var existingReview = _context.Reviews.FirstOrDefault(r => r.UserId == reviewCreateDto.UserId && r.MovieId == reviewCreateDto.MovieId);
+
+            if (existingReview != null)
+            {
+                return Conflict("User already created a review for this movie");
+            }
+
             var review = reviewCreateDto.ToReview();
             _context.Reviews.Add(review);
             await _context.SaveChangesAsync();

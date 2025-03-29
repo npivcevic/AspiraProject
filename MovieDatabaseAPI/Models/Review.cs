@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace MovieDatabaseAPI.Models;
 
+[Index(nameof(UserId), nameof(MovieId), IsUnique = true)]
 public class Review
 {
     public int Id { get; set; }

@@ -56,15 +56,16 @@ public static class ReviewMapper
         };
     }
 
-    public static Review ToReview(this ReviewUpdateDto reviewUpdateDto)
+    public static Review ToReview(this ReviewUpdateDto reviewUpdateDto, Review existingReview)
     {
         return new Review
         {
             Id = reviewUpdateDto.Id,
             Content = reviewUpdateDto.Content,
             Rating = reviewUpdateDto.Rating,
-            UserId = reviewUpdateDto.UserId,
-            MovieId = reviewUpdateDto.MovieId,
+            UserId = existingReview.UserId,
+            MovieId = existingReview.MovieId,
+            CreatedAt = existingReview.CreatedAt,
             UpdatedAt = DateTime.Now
         };
     }
