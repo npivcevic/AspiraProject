@@ -12,4 +12,6 @@ public class Movie
     public string Description { get; set; } = "";
 
     public ICollection<Review> Reviews { get; set; } = new List<Review>();
+
+    public ICollection<Genre> Genres { get; set; } = new List<Genre>();
 }
