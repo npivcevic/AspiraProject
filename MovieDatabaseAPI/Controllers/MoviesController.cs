@@ -34,17 +34,22 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<MovieDto>> GetMovie(int id)
         {
-            var movie = await _context.Movies
+            var result = await _context.Movies
                 .Include(m => m.Reviews.OrderByDescending(r => r.CreatedAt).Take(3))
                 .ThenInclude(r => r.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Select(m => new
+                {
+                    Movie = m,
+                    AverageRating = m.Reviews.DefaultIfEmpty().Average(r => r == null ? 0 : r.Rating)
+                })
+                .FirstOrDefaultAsync(m => m.Movie.Id == id);
 
-            if (movie == null)
+            if (result == null)
             {
                 return NotFound();
             }
 
-            return movie.ToMovieDto();
+            return result.Movie.ToMovieDto(result.AverageRating);
         }
 
         // PUT: api/Movies/5

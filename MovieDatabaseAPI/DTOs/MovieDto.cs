@@ -11,6 +11,8 @@ public class MovieDto
     public string Description { get; set; } = "";
 
     public List<ReviewForMovieDto> Reviews { get; set; } = new List<ReviewForMovieDto>();
+
+    public double AverageRating { get; set; } = 0;
 }
 
 public class MovieListDto
