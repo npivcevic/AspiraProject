@@ -16,6 +16,19 @@ public static class MovieMapper
             Reviews = movie.Reviews.Select(r => r.ToReviewForMovieDto()).ToList()
         };
     }
+
+    public static MovieDto ToMovieDto(this Movie movie, double averageRating)
+    {
+        return new MovieDto
+        {
+            Id = movie.Id,
+            Title = movie.Title,
+            ReleaseYear = movie.ReleaseYear,
+            Description = movie.Description,
+            Reviews = movie.Reviews.Select(r => r.ToReviewForMovieDto()).ToList(),
+            AverageRating = averageRating
+        };
+    }
     
     public static MovieListDto ToMovieListDto(this Movie movie)
     {
