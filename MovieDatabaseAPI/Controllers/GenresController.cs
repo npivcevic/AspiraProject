@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MovieDatabaseAPI;
 using MovieDatabaseAPI.DTOs;
@@ -60,6 +61,10 @@ namespace MovieDatabaseAPI.Controllers
             {
                 await _context.SaveChangesAsync();
             }
+            catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx && sqlEx.Number == 2601)
+            {
+                return Conflict(new { message = "A genre with the same name already exists." });
+            }
             catch (DbUpdateConcurrencyException)
             {
                 if (!GenreExists(id))
@@ -83,7 +88,14 @@ namespace MovieDatabaseAPI.Controllers
             var genre = genreCreateDto.ToGenre();
             
             _context.Genres.Add(genre);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx && sqlEx.Number == 2601)
+            {
+                return Conflict(new { message = "A genre with the same name already exists." });
+            }
 
             return CreatedAtAction("GetGenre", new { id = genre.Id }, genre.ToGenreDto());
         }
