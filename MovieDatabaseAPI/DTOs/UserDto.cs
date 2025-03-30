@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using MovieDatabaseAPI.CustomValidators;
 
 namespace MovieDatabaseAPI.DTOs;
 
@@ -19,6 +20,7 @@ public class UserListDto
 
 public class UserCreateDto
 {
+    [UniqueEmail]
     [EmailAddress]
     [StringLength(100)]
     public required string Email { get; set; }
@@ -33,6 +35,7 @@ public class UserCreateDto
 public class UserUpdateDto
 {
     public int Id { get; set; }
+    [UniqueEmail]
     [EmailAddress]
     [StringLength(100)]
     public required string Email { get; set; }
