@@ -26,6 +26,7 @@ public static class MovieMapper
             ReleaseYear = movie.ReleaseYear,
             Description = movie.Description,
             Reviews = movie.Reviews.Select(r => r.ToReviewForMovieDto()).ToList(),
+            Genres = movie.Genres.Select(g => g.ToGenreDto()).ToList(),
             AverageRating = averageRating
         };
     }

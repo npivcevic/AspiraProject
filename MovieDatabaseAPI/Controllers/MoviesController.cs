@@ -37,6 +37,7 @@ namespace MovieDatabaseAPI.Controllers
             var result = await _context.Movies
                 .Include(m => m.Reviews.OrderByDescending(r => r.CreatedAt).Take(3))
                 .ThenInclude(r => r.User)
+                .Include(m => m.Genres)
                 .Select(m => new
                 {
                     Movie = m,
@@ -55,14 +56,24 @@ namespace MovieDatabaseAPI.Controllers
         // PUT: api/Movies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMovie(int id, MovieUpdateDto movie)
+        public async Task<IActionResult> PutMovie(int id, MovieUpdateDto movieUpdateDto)
         {
-            if (id != movie.Id)
+            if (id != movieUpdateDto.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(movie.ToMovie()).State = EntityState.Modified;
+            var existingMovie = _context.Movies.Include(m => m.Genres).FirstOrDefault(m => m.Id == id);
+
+            if (existingMovie == null)
+            {
+                return NotFound();
+            }
+
+            _context.Entry(existingMovie).CurrentValues.SetValues(movieUpdateDto);
+
+            var genres = await _context.Genres.Where(g => movieUpdateDto.GenreIds.Contains(g.Id)).ToListAsync();
+            existingMovie.Genres = genres;
 
             try
             {
@@ -88,7 +99,10 @@ namespace MovieDatabaseAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<MovieDto>> PostMovie(MovieCreateDto movieCreateDto)
         {
+            var genres = await _context.Genres.Where(g => movieCreateDto.GenreIds.Contains(g.Id)).ToListAsync();
+
             Movie movie = movieCreateDto.ToMovie();
+            movie.Genres = genres;
             _context.Movies.Add(movie);
             await _context.SaveChangesAsync();
 

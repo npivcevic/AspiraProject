@@ -11,6 +11,7 @@ public class MovieDto
     public string Description { get; set; } = "";
 
     public List<ReviewForMovieDto> Reviews { get; set; } = new List<ReviewForMovieDto>();
+    public List<GenreDto> Genres { get; set; } = new List<GenreDto>();
 
     public double AverageRating { get; set; } = 0;
 }
@@ -30,6 +31,7 @@ public class MovieCreateDto
     public int? ReleaseYear { get; set; }
     [StringLength(1000)]
     public string Description { get; set; } = "";
+    public List<int> GenreIds { get; set; } = new List<int>();
 }
 
 public class MovieUpdateDto
@@ -41,4 +43,5 @@ public class MovieUpdateDto
     public int? ReleaseYear { get; set; }
     [StringLength(1000)]
     public string Description { get; set; } = "";
+    public List<int> GenreIds { get; set; } = new List<int>();
 }
