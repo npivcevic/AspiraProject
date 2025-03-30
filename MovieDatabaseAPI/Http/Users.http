@@ -1,0 +1,31 @@
+###
+GET http://localhost:5237/api/Users
+
+###
+POST http://localhost:5237/api/Users
+Content-Type: application/json
+
+{
+  "email": "nikola@example.com",
+  "password": "12345",
+  "firstName": "Nikola",
+  "lastName": "Pivcevic"
+}
+
+###
+GET http://localhost:5237/api/Users/1
+
+###
+PUT http://localhost:5237/api/Users/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "email": "nikola@example.com",
+  "password": "12345",
+  "firstName": "Nikola",
+  "lastName": "Pivcevic"
+}
+
+###
+DELETE http://localhost:5237/api/Users/1

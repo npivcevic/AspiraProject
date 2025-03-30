@@ -1,0 +1,25 @@
+###
+GET http://localhost:5237/api/Genres
+
+###
+POST http://localhost:5237/api/Genres
+Content-Type: application/json
+
+{
+  "name": "Thriller"
+}
+
+###
+GET http://localhost:5237/api/Genres/1
+
+###
+PUT http://localhost:5237/api/Genres/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Horror"
+}
+
+###
+DELETE http://localhost:5237/api/Genres/8

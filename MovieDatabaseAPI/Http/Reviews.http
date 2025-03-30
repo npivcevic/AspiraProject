@@ -1,0 +1,31 @@
+###
+GET http://localhost:5237/api/Reviews
+
+###
+POST http://localhost:5237/api/Reviews
+Content-Type: application/json
+
+{
+  "content": "An amazing movie!",
+  "rating": 8,
+  "userId": 1,
+  "movieId": 2
+}
+
+###
+GET http://localhost:5237/api/Reviews/5
+
+###
+PUT http://localhost:5237/api/Reviews/5
+Content-Type: application/json
+
+{
+  "id": 5,
+  "content": "An amazing movie, indeed!",
+  "rating": 7,
+  "userId": 1,
+  "movieId": 2
+}
+
+###
+DELETE http://localhost:5237/api/Reviews/5
