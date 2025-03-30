@@ -26,9 +26,15 @@ namespace MovieDatabaseAPI.Controllers
 
         // GET: api/Genres
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GenreListDto>>> GetGenres()
+        public async Task<ActionResult<IEnumerable<GenreListDto>>> GetGenres([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            return await _context.Genres.Select(g => g.ToGenreListDto()).ToListAsync();
+            var genres = await _context.Genres
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(g => g.ToGenreListDto())
+                .ToListAsync();
+
+            return Ok(genres);
         }
 
         // GET: api/Genres/5

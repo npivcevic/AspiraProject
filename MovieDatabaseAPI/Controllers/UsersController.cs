@@ -25,9 +25,15 @@ namespace MovieDatabaseAPI.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserListDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserListDto>>> GetUsers([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            return await _context.Users.Select(u => u.ToUserListDto()).ToListAsync();
+            var users = await _context.Users
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(u => u.ToUserListDto())
+                .ToListAsync();
+
+            return Ok(users);
         }
 
         // GET: api/Users/5

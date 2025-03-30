@@ -1,5 +1,5 @@
 ###
-GET http://localhost:5237/api/Reviews
+GET http://localhost:5237/api/Reviews?page=1&pageSize=2
 
 ###
 POST http://localhost:5237/api/Reviews

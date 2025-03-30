@@ -1,5 +1,5 @@
 ###
-GET http://localhost:5237/api/Movies
+GET http://localhost:5237/api/Movies?page=1&pageSize=2
 
 ###
 POST http://localhost:5237/api/Movies

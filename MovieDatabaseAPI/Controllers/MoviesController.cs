@@ -25,9 +25,15 @@ namespace MovieDatabaseAPI.Controllers
 
         // GET: api/Movies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovieListDto>>> GetMovies()
+        public async Task<ActionResult<IEnumerable<MovieListDto>>> GetMovies([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            return await _context.Movies.Select(m => m.ToMovieListDto()).ToListAsync();
+            var movies = await _context.Movies
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(m => m.ToMovieListDto())
+                .ToListAsync();
+
+            return Ok(movies);
         }
 
         // GET: api/Movies/5

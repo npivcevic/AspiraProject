@@ -25,13 +25,17 @@ namespace MovieDatabaseAPI.Controllers
 
         // GET: api/Reviews
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReviewListDto>>> GetReviews()
+        public async Task<ActionResult<IEnumerable<ReviewListDto>>> GetReviews([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            return await _context.Reviews
+            var reviews = await _context.Reviews
                 .Include(r => r.User)
                 .Include(r => r.Movie)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(r => r.ToReviewListDto())
                 .ToListAsync();
+
+            return Ok(reviews);
         }
 
         // GET: api/Reviews/5
