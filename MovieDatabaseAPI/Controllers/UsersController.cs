@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieDatabaseAPI;
@@ -17,10 +18,12 @@ namespace MovieDatabaseAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IPasswordHasher<User> _passwordHasher;
 
-        public UsersController(DataContext context)
+        public UsersController(DataContext context, IPasswordHasher<User> passwordHasher)
         {
             _context = context;
+            _passwordHasher = passwordHasher;
         }
 
         // GET: api/Users
@@ -60,7 +63,10 @@ namespace MovieDatabaseAPI.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(userUpdateDto.ToUser()).State = EntityState.Modified;
+            User updatedUser = userUpdateDto.ToUser();
+            updatedUser.Password = _passwordHasher.HashPassword(updatedUser, userUpdateDto.Password);
+
+            _context.Entry(updatedUser).State = EntityState.Modified;
 
             try
             {
@@ -87,6 +93,7 @@ namespace MovieDatabaseAPI.Controllers
         public async Task<ActionResult<UserDto>> PostUser(UserCreateDto userCreateDto)
         {
             User user = userCreateDto.ToUser();
+            user.Password = _passwordHasher.HashPassword(user, user.Password);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
