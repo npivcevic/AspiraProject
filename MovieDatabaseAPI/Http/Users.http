@@ -1,9 +1,11 @@
 ###
 GET {{host}}/api/Users?page=1&pageSize=2
+Authorization: Bearer {{auth_token}}
 
 ###
 POST {{host}}/api/Users
 Content-Type: application/json
+Authorization: Bearer {{auth_token}}
 
 {
   "email": "nikola@example.com",
@@ -14,10 +16,12 @@ Content-Type: application/json
 
 ###
 GET {{host}}/api/Users/1
+Authorization: Bearer {{auth_token}}
 
 ###
 PUT {{host}}/api/Users/1
 Content-Type: application/json
+Authorization: Bearer {{auth_token}}
 
 {
   "id": 1,
@@ -29,3 +33,4 @@ Content-Type: application/json
 
 ###
 DELETE {{host}}/api/Users/1
+Authorization: Bearer {{auth_token}}
