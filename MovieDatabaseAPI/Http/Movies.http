@@ -1,8 +1,8 @@
 ###
-GET http://localhost:5237/api/Movies?page=1&pageSize=2
+GET {{host}}/api/Movies?page=1&pageSize=2
 
 ###
-POST http://localhost:5237/api/Movies
+POST {{host}}/api/Movies
 Content-Type: application/json
 
 {
@@ -15,10 +15,10 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:5237/api/Movies/1
+GET {{host}}/api/Movies/1
 
 ###
-PUT http://localhost:5237/api/Movies/1
+PUT {{host}}/api/Movies/1
 Content-Type: application/json
 
 {
@@ -32,4 +32,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:5237/api/Movies/1
+DELETE {{host}}/api/Movies/1

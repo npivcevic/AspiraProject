@@ -1,8 +1,8 @@
 ###
-GET http://localhost:5237/api/Users?page=1&pageSize=2
+GET {{host}}/api/Users?page=1&pageSize=2
 
 ###
-POST http://localhost:5237/api/Users
+POST {{host}}/api/Users
 Content-Type: application/json
 
 {
@@ -13,10 +13,10 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:5237/api/Users/1
+GET {{host}}/api/Users/1
 
 ###
-PUT http://localhost:5237/api/Users/1
+PUT {{host}}/api/Users/1
 Content-Type: application/json
 
 {
@@ -28,4 +28,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:5237/api/Users/1
+DELETE {{host}}/api/Users/1
