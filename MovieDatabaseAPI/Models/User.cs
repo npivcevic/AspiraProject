@@ -15,4 +15,6 @@ public class User
     public string FirstName { get; set; } = "";
     [MaxLength(100)]
     public string LastName { get; set; } = "";
+
+    public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 }

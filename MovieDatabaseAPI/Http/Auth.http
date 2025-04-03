@@ -7,4 +7,40 @@ Content-Type: application/json
   "password": "12345"
 }
 
-> {% client.global.set("auth_token", response.body.accessToken); %}
+> {%
+    client.global.set("auth_token", response.body.accessToken);
+    client.global.set("refresh_token", response.body.refreshToken);
+%}
+
+###
+POST {{host}}/api/Auth/RefreshToken
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refresh_token}}"
+}
+
+> {%
+    client.global.set("auth_token", response.body.accessToken);
+    client.global.set("refresh_token", response.body.refreshToken);
+%}
+
+###
+POST {{host}}/api/Auth/Logout
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refresh_token}}"
+}
+
+###
+POST {{host}}/api/Auth/LogoutFromAllDevices
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refresh_token}}"
+}
+
+###
+GET {{host}}/api/Auth/Me
+Authorization: Bearer {{auth_token}}

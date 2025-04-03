@@ -9,6 +9,7 @@ public class DataContext : DbContext
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Review> Reviews { get; set; }
     public DbSet<Genre> Genres { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     public DataContext(DbContextOptions options) : base(options)
     {

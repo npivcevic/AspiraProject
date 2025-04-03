@@ -36,9 +36,28 @@ public class TokenService
             issuer: _configuration["Jwt:Issuer"],
             audience: _configuration["Jwt:Audience"],
             claims: claims,
-            expires: DateTime.Now.AddHours(1),
+            expires: DateTime.Now.AddMinutes(15),
             signingCredentials: credentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
+    public RefreshToken GenerateRefreshToken()
+    {
+        return new RefreshToken()
+        {
+            Value = GenerateRefreshTokenValue(),
+            ExpiresAt = DateTime.Now.AddDays(30)
+        };
+    }
+
+    private string GenerateRefreshTokenValue()
+    {
+        var randomNumber = new byte[32];
+        using (var rng = System.Security.Cryptography.RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
+        }
     }
 }
