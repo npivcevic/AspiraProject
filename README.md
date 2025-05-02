@@ -1,6 +1,9 @@
 # Movie Database API
 An example project for the course Programming in .NET Environment.
 
+### Database diagram
+![MovieDB Diagram](https://github.com/user-attachments/assets/f3897dcb-ad41-44fd-aca8-9c40be321bbc)
+
 ### This project demonstrates the following:
 - Creating a .NET 8 Web Api project
 - Using Entity Framework Core, creating Models and Migrations
